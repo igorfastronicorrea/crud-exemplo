@@ -11,7 +11,13 @@ const TrainingSchema = new mongoose.Schema({
     exampleAudio: {
         type: String
     },
+    exampleAudioBase64: {
+        type: String
+    },
     trainingAudio: {
+        type: String,
+    },
+    trainingAudioBase64: {
         type: String,
     },
     date: {
@@ -27,9 +33,9 @@ const TrainingSchema = new mongoose.Schema({
         type: String
     }
 },
-{
-    versionKey: false
-}
+    {
+        versionKey: false
+    }
 )
 
 
