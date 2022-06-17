@@ -1,5 +1,5 @@
 const User = require('../../models/TrainingModel');
-const repository = require('../../repositores/TrainingRepository');
+const repository = require('../../repositories/TrainingRepository');
 
 exports.post = async (req, res) => {
 
@@ -15,7 +15,7 @@ exports.get = async (req, res) => {
 
     try {
         var data = await repository.list();
-        res.status(200).send({monitoring: data});
+        res.status(200).send({ monitoring: data });
     } catch (err) {
         res.status(500).send({ "message": "erro" });
     }

@@ -1,5 +1,5 @@
 const Fono = require('../../models/FonoModel');
-const repository = require('../../repositores/FonoRespository');
+const repository = require('../../repositories/FonoRepository');
 
 
 exports.post = async (req, res) => {

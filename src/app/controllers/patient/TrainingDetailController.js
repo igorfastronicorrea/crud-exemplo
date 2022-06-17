@@ -1,4 +1,4 @@
-const repository = require('../../repositores/TrainingRepository.js');
+const repository = require('../../repositories/TrainingRepository.js');
 const fs = require('fs');
 
 
