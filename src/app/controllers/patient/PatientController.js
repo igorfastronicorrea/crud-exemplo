@@ -1,42 +1,35 @@
 const repository = require('../../repositories/PatientRepository');
+const decodeToken = require('../../services/decodedService');
 
 exports.post = async (req, res) => {
 
     try {
-        var data = await repository.create(req.body);
+        var fonoId = await decodeToken.decodeId(req.headers.authorization);
 
-        if (data != undefined) {
-            res.status(200).send({ fono: data });
+        var data = { ...req.body, fonoId }
+
+        const dataPatientCreated = await repository.create(data);
+        dataPatientCreated.password = undefined;
+
+        if (dataPatientCreated != undefined) {
+            res.status(200).send({ patient: dataPatientCreated });
         } else {
             res.status(500).send({ "message": "error create patient, username already exist" });
         }
 
     } catch (err) {
-        res.status(500).send({ "message": "error create fono" });
+        console.log(err)
+        res.status(500).send({ "message": "error create patient" });
     }
 }
 
 exports.get = async (req, res) => {
 
     try {
-        var data = await repository.list(req.query.fonoId);
+        var fonoId = await decodeToken.decodeId(req.headers.authorization);
+
+        var data = await repository.list(fonoId);
         res.status(200).send({ patients: data });
-    } catch (err) {
-        res.status(500).send({ "message": "error patients list" });
-    }
-}
-
-function sleep(ms) {
-    return new Promise((resolve) => {
-        setTimeout(resolve, ms);
-    });
-}
-
-exports.testRiba = async (req, res) => {
-
-    try {
-        //var data = await repository.list(req.query.fonoId);
-        res.status(200).send({ version: "0.0.1" });
     } catch (err) {
         res.status(500).send({ "message": "error patients list" });
     }

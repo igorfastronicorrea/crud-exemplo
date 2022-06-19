@@ -50,6 +50,7 @@ exports.listTrainingsOfPatience = async (patientId, date) => {
 
 exports.detailTrainingOfPatient = async trainingId => {
     try {
+
         var training = await TrainingModel.find({ _id: trainingId })
 
         return training[0];
@@ -97,8 +98,23 @@ exports.trainingDetailPatient = async (trainingId) => {
     try {
         const query = { _id: trainingId };
         var trainings = await TrainingModel.find(query);
+
         return trainings[0];
     } catch (err) {
         return undefined;
+    }
+}
+
+exports.trainingDelete = async (trainingId) => {
+    try {
+        const query = { _id: trainingId };
+        var training = await TrainingModel.deleteOne(query);
+        console.log(training);
+        if (training.deletedCount != 1) {
+            return false;
+        }
+        return true;
+    } catch (err) {
+        return false;
     }
 }

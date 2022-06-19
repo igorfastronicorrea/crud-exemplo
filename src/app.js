@@ -4,6 +4,7 @@ const app = express();
 const routes = require('./routes');
 const cors = require('cors');
 var path = require('path');
+require("dotenv").config();
 
 app.use(express.json());
 app.use(bodyParser.json());

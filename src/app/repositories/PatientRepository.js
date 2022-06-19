@@ -6,10 +6,6 @@ exports.list = async data => {
     try {
         var patients = await PatientModel.find({ fonoId: data });
 
-        console.log(Math.floor(
-            Math.random() * (3 - 1) + 1
-        ));
-
         patients = await patients.map(element => ({
             ...element._doc, status: Math.floor(
                 Math.random() * (3 - 1) + 1

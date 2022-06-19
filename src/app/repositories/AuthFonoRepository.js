@@ -4,10 +4,11 @@ exports.find = async (req) => {
 
     try {
 
-        var user = FonoModel.find({ $and: [{ username: req.username }, { password: req.password }] })
+        var user = await FonoModel.findOne({ username: req.username }).select('+password');
 
         return user;
     } catch (err) {
+        console.log(err)
         return undefined;
     }
 
