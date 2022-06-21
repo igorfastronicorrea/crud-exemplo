@@ -10,7 +10,11 @@ exports.post = async (req, res) => {
 
         var exerciseDetail = await exerciseRepository.detail(req.body.exerciseId);
         var exampleAudioUrl = exerciseDetail.exampleAudioUrl;
-        objectTraining = { ...req.body, fonoId, exampleAudioUrl };
+        var exerciseName = await exerciseDetail.name;
+        var exerciseDescription = await exerciseDetail.description;
+
+        console.log(exerciseName)
+        objectTraining = { ...req.body, fonoId, exampleAudioUrl, name: exerciseName, description: exerciseDescription };
 
         var data = await repository.create(objectTraining);
         res.status(200).send({ data });

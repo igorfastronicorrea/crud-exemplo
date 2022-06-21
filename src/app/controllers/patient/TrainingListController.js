@@ -15,6 +15,8 @@ exports.get = async (req, res) => {
 exports.getPendingTrainings = async (req, res) => {
     try {
         var pendingTrainings = await repository.pendingTrainingPatient(req.params.patientId);
+
+
         res.status(200).send({ pendingTrainings });
     } catch (err) {
         res.status(500).send({ "message": " error load training pendents this patient" });
@@ -24,9 +26,10 @@ exports.getPendingTrainings = async (req, res) => {
 exports.getCompletedTrainings = async (req, res) => {
     try {
         var completedTrainings = await repository.completedTrainingPatient(req.params.patientId);
+
         res.status(200).send({ completedTrainings });
     } catch (err) {
-        res.status(500).send({ "message": " error load training completed this patient" });
+        res.status(500).send({ "message": "a error load training completed this patient" });
     }
 }
 
@@ -43,6 +46,9 @@ exports.getTrainingDetail = async (req, res) => {
         training._id = undefined
         training.fonoId = undefined;
 
+        if (training.complete) {
+            training.audioTrainingUrl = "http://soundfxcenter.com/movies/star-wars/8d82b5_Star_Wars_Main_Theme_Song.mp3";
+        }
 
         res.status(200).send({ training });
     } catch (err) {

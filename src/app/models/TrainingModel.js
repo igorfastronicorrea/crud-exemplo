@@ -1,6 +1,12 @@
 const mongoose = require('../database');
 
 const TrainingSchema = new mongoose.Schema({
+    name: {
+        type: String
+    },
+    description: {
+        type: String
+    },
     date: {
         type: Date
     },
