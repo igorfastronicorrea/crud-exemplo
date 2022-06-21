@@ -107,7 +107,7 @@ exports.trainingDetailPatient = async (trainingId) => {
 
 exports.trainingDelete = async (trainingId) => {
     try {
-        const query = { _id: trainingId };
+        const query = { _id: trainingId, complete: false };
         var training = await TrainingModel.deleteOne(query);
         console.log(training);
         if (training.deletedCount != 1) {

@@ -4,6 +4,15 @@ const TrainingSchema = new mongoose.Schema({
     date: {
         type: Date
     },
+    exampleAudioUrl: {
+        type: String,
+    },
+    audioTrainingUrl: {
+        type: String,
+    },
+    audioTrainingBase64: {
+        type: String,
+    },
     complete: {
         type: Boolean,
         default: false,

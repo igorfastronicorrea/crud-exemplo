@@ -8,7 +8,7 @@ const ExerciseSchema = new mongoose.Schema({
     description: {
         type: String
     },
-    exampleAudio: {
+    exampleAudioUrl: {
         type: String
     },
     exampleAudioBase64: {

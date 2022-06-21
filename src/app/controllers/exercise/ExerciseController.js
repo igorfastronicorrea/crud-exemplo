@@ -6,7 +6,11 @@ exports.postCreateExercise = async (req, res) => {
     try {
         var fonoId = await decodeToken.decodeId(req.headers.authorization);
 
-        objectExercise = { ...req.body, fonoId };
+        //Criando exercise audio url hardcoded
+        //TODO converter o base 64 para audio e gravar aqui
+        var exampleAudioUrl = "http://soundfxcenter.com/movies/star-wars/8d82b5_Star_Wars_Main_Theme_Song.mp3"
+
+        objectExercise = { ...req.body, fonoId, exampleAudioUrl };
 
         var data = await repository.create(objectExercise);
 
