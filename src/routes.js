@@ -43,4 +43,7 @@ router.put('/patient/training/:trainingId', TrainingDetailController.put);
 router.post('/monitoring', Monitoring.post)
 router.get('/monitoring', TrainingController.get)
 
+router.get('/audioconverter', TrainingDetailController.convert);
+
+
 module.exports = router;

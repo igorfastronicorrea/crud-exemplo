@@ -63,7 +63,8 @@ exports.completeTrainingOfPatient = async (trainingId, trainingAudio) => {
 
     try {
         const query = { _id: trainingId };
-        const update = { complete: true, trainingAudio: trainingAudio };
+        //const update = { complete: true, trainingAudio: trainingAudio };
+        const update = { complete: false, trainingAudio: trainingAudio };
 
         var training = await TrainingModel.findOneAndUpdate(query, update);
 
