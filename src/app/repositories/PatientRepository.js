@@ -13,7 +13,7 @@ exports.list = async data => {
         }));
 
 
-        patients = await patients.map(({ password, username, ...patient }) => {
+        patients = await patients.map(({ password, ...patient }) => {
             return patient;
         });
         return patients;

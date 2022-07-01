@@ -26,13 +26,11 @@ exports.put = async (req, res) => {
             command = ffmpeg(pathToSourceFile).output(pathToSourceOutFile).audioCodec('libmp3lame').run();
 
             console.log('File mp3 created');
-
         });
 
         setTimeout(function () {
             fs.unlink(`public/${req.params.trainingId}-training.aac`, function (err) {
                 if (err) throw err;
-                // if no error, file has been deleted successfully
                 console.log('File deleted!');
             });
         }, 40000);
