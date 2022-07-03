@@ -6,6 +6,7 @@ const bcryptjs = require('bcryptjs');
 exports.post = async (req, res) => {
 
     try {
+        console.log("login")
         var data = await repository.find(req.body);
 
         if (!data) {

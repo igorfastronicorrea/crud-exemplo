@@ -59,12 +59,11 @@ exports.detailTrainingOfPatient = async trainingId => {
     }
 }
 
-exports.completeTrainingOfPatient = async (trainingId, trainingAudio) => {
+exports.completeTrainingOfPatient = async (trainingId, audioTrainingBase64, audioTrainingUrl) => {
 
     try {
         const query = { _id: trainingId };
-        //const update = { complete: true, trainingAudio: trainingAudio };
-        const update = { complete: false, trainingAudio: trainingAudio };
+        const update = { complete: true, audioTrainingBase64: audioTrainingBase64, audioTrainingUrl: audioTrainingUrl };
 
         var training = await TrainingModel.findOneAndUpdate(query, update);
 

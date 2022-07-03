@@ -16,22 +16,29 @@ exports.get = async (req, res) => {
 
 exports.put = async (req, res) => {
     try {
-        var training = await repository.completeTrainingOfPatient(req.params.trainingId, req.body.trainingAudio);
+        let audioTrainingUrl = "http://api.mobot.com.br/" + `trainings/${req.params.trainingId}-training.mp3`;
+        let base64String = req.body.audioTrainingBase64
 
-        let base64String = req.body.trainingAudio
 
-        fs.writeFile(`public/${req.params.trainingId}-training.aac`, base64String, { encoding: 'base64' }, async function (err) {
-            var pathToSourceFile = path.resolve(__dirname, `../../../../public/${req.params.trainingId}-training.aac`);
-            var pathToSourceOutFile = path.resolve(__dirname, `../../../../public/${req.params.trainingId}-training.mp3`);
+        var training = await repository.completeTrainingOfPatient(req.params.trainingId, req.body.audioTrainingBase64, audioTrainingUrl);
+
+
+        fs.writeFile(`trainings/${req.params.trainingId}-training.aac`, base64String, { encoding: 'base64' }, async function (err) {
+            var pathToSourceFile = path.resolve(__dirname, `../../../../trainings/${req.params.trainingId}-training.aac`);
+            var pathToSourceOutFile = path.resolve(__dirname, `../../../../trainings/${req.params.trainingId}-training.mp3`);
             command = ffmpeg(pathToSourceFile).output(pathToSourceOutFile).audioCodec('libmp3lame').run();
 
             console.log('File mp3 created');
         });
 
         setTimeout(function () {
-            fs.unlink(`public/${req.params.trainingId}-training.aac`, function (err) {
-                if (err) throw err;
-                console.log('File deleted!');
+            fs.unlink(`trainings/${req.params.trainingId}-training.aac`, function (err) {
+                if (err) {
+                    console.log('error create exercise')
+                } else {
+                    console.log('File deleted!');
+                };
+
             });
         }, 40000);
 

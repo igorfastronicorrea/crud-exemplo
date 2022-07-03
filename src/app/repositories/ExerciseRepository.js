@@ -31,6 +31,22 @@ exports.create = async data => {
 
 }
 
+
+exports.put = async (exerciseId, exampleAudioUrl) => {
+
+    try {
+        const query = { _id: exerciseId };
+        const update = { exampleAudioUrl: exampleAudioUrl };
+        let exercise = await ExerciseModel.findOneAndUpdate(query, update);
+
+        return exercise;
+    } catch (err) {
+        return undefined;
+    }
+
+}
+
+
 exports.detail = async data => {
     try {
         let exercise = await ExerciseModel.find({ _id: data });
