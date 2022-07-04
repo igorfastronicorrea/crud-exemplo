@@ -16,7 +16,7 @@ exports.get = async (req, res) => {
 
 exports.put = async (req, res) => {
     try {
-        let audioTrainingUrl = "http://api.mobot.com.br/" + `trainings/${req.params.trainingId}-training.mp3`;
+        let audioTrainingUrl = "https://api-mobot.herokuapp.com/" + `trainings/${req.params.trainingId}-training.mp3`;
         let base64String = req.body.audioTrainingBase64
 
 
