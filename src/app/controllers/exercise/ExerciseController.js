@@ -12,7 +12,7 @@ exports.postCreateExercise = async (req, res) => {
 
         let base64String = req.body.exampleAudioBase64
 
-        var exampleAudioUrl = "https://api.mobot.com.br/";
+        var exampleAudioUrl = "https://api-mobot.herokuapp.com/";
 
         objectExercise = { ...req.body, fonoId, exampleAudioUrl };
 
@@ -22,7 +22,7 @@ exports.postCreateExercise = async (req, res) => {
             console.log('File mp3 created');
         });
 
-        exampleAudioUrl = "https://api.mobot.com.br/" + `exercises/${data._id}-exercise.mp3`;
+        exampleAudioUrl = "https://api-mobot.herokuapp.com/" + `exercises/${data._id}-exercise.mp3`;
 
         await repository.put(data._id, exampleAudioUrl)
 
