@@ -64,3 +64,31 @@ exports.statusPacientXExercise = async patientID => {
         return false;
     }
 }
+
+
+exports.patientsWithStatus = async data => {
+
+    try {
+        var patients = await PatientModel.find();
+        patients = await patients.map(element => ({
+            ...element._doc, status: true
+        }));
+
+        var elements = []
+        for (let index = 0; index < patients.length; index++) {
+            var patient = patients[index]
+            patient.status = await status.statusPacientXExercise(patient._id);
+
+            elements.push(patient)
+        }
+
+        elements = await elements.map(({ password, ...patient }) => {
+            return patient;
+        });
+        return elements;
+    } catch (err) {
+        console.log(err)
+        return undefined;
+    }
+
+}

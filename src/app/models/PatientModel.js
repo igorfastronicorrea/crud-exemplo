@@ -16,11 +16,14 @@ const PatientSchema = new mongoose.Schema({
     },
     fonoId: {
         type: String,
+    },
+    firebaseToken: {
+        type: String,
     }
 },
-{
-    versionKey: false
-}
+    {
+        versionKey: false
+    }
 )
 
 const patient = mongoose.model('patient', PatientSchema, 'patient');

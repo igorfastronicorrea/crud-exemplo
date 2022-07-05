@@ -13,6 +13,7 @@ const TrainingDetailController = require('./app/controllers/patient/TrainingDeta
 const ExerciseController = require('./app/controllers/exercise/ExerciseController')
 const Monitoring = require('./app/controllers/fono/Monitoring')
 const authMiddleware = require('./app/middleware/auth');
+const PushController = require('./app/controllers/pushnotification/PushController');
 
 router.get('/version', (req, res) => res.status(200).send({ version: "0.0.1" }));
 
@@ -39,6 +40,9 @@ router.get('/patient/:patientId/training', TrainingListController.get);
 router.get('/patient/training/:trainingId', TrainingDetailController.get);
 router.put('/patient/training/:trainingId', TrainingDetailController.put);
 
+
+//PUSH
+router.post('/push', PushController.push);
 
 router.post('/monitoring', Monitoring.post)
 router.get('/monitoring', TrainingController.get)

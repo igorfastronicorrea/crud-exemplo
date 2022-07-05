@@ -11,3 +11,18 @@ exports.find = async (req) => {
     }
 
 }
+
+
+exports.update = async (patientId, firebaseToken) => {
+    try {
+
+        const query = { _id: patientId };
+        const update = { firebaseToken: firebaseToken };
+
+        var updatePatient = await PatientModel.findOneAndUpdate(query, update);
+
+        return updatePatient;
+    } catch (err) {
+        return undefined;
+    }
+}
