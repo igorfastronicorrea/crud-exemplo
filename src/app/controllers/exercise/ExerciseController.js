@@ -4,6 +4,8 @@ const fs = require('fs');
 var ffmpeg = require('fluent-ffmpeg');
 var command = ffmpeg();
 var path = require('path');
+const AWS = require('aws-sdk');
+const mime = require('mime');
 
 exports.postCreateExercise = async (req, res) => {
 
@@ -18,11 +20,27 @@ exports.postCreateExercise = async (req, res) => {
 
         var data = await repository.create(objectExercise);
 
-        fs.writeFile(`exercises/${data._id}-exercise.mp3`, base64String.replace("data:audio/mp3;base64,", ""), { encoding: 'base64' }, function (err) {
+        var pathToSourceFile = path.resolve(__dirname, `../../../../exercises/${data._id}-exercise.mp3`);
+
+        const fileContent = await fs.promises.readFile(pathToSourceFile);
+
+        const contentType = mime.getType(pathToSourceFile);
+
+
+        fs.writeFile(`exercises/${data._id}-exercise.mp3`, base64String.replace("data:audio/mp3;base64,", ""), { encoding: 'base64' }, async function (err) {
             console.log('File mp3 created');
+
+            const s3 = new AWS.S3();
+            await s3.putObject({
+                Body: fileContent,
+                Key: data._id,
+                Bucket: "mobot-audios",
+                ContentType: contentType,
+                ACL: 'public-read',
+            }).promise();
         });
 
-        exampleAudioUrl = "https://api-mobot.herokuapp.com/" + `exercises/${data._id}-exercise.mp3`;
+        exampleAudioUrl = `https://mobot-audios.s3.us-west-2.amazonaws.com/${data._id}-exercise.mp3`;
 
         await repository.put(data._id, exampleAudioUrl)
 

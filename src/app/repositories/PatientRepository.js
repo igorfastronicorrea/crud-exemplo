@@ -70,6 +70,7 @@ exports.patientsWithStatus = async data => {
 
     try {
         var patients = await PatientModel.find();
+
         patients = await patients.map(element => ({
             ...element._doc, status: true
         }));

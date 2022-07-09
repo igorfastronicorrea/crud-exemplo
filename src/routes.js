@@ -43,6 +43,7 @@ router.put('/patient/training/:trainingId', TrainingDetailController.put);
 
 //PUSH
 router.post('/push', PushController.push);
+router.post('/test', PushController.test);
 
 router.post('/monitoring', Monitoring.post)
 router.get('/monitoring', TrainingController.get)
