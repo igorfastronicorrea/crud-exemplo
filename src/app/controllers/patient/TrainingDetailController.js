@@ -3,7 +3,6 @@ const fs = require('fs');
 var ffmpeg = require('fluent-ffmpeg');
 var command = ffmpeg();
 var path = require('path');
-var path = require('path');
 const AWS = require('aws-sdk');
 const mime = require('mime');
 
