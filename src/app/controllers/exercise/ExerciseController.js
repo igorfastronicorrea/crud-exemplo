@@ -36,7 +36,17 @@ exports.postCreateExercise = async (req, res) => {
                 ContentType: contentType,
                 ACL: 'public-read',
             }).promise();
+
+            fs.unlink(`exercises/${data._id}-exercise.mp3`, function (err) {
+                if (err) {
+                    console.log('error create exercise')
+                } else {
+                    console.log('File deleted!');
+                };
+
+            });
         });
+
 
         exampleAudioUrl = `https://mobot-audios.s3.us-west-2.amazonaws.com/${idExercise}-exercise.mp3`;
 

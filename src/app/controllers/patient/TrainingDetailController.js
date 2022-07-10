@@ -3,6 +3,9 @@ const fs = require('fs');
 var ffmpeg = require('fluent-ffmpeg');
 var command = ffmpeg();
 var path = require('path');
+var path = require('path');
+const AWS = require('aws-sdk');
+const mime = require('mime');
 
 exports.get = async (req, res) => {
 
@@ -16,9 +19,10 @@ exports.get = async (req, res) => {
 
 exports.put = async (req, res) => {
     try {
-        let audioTrainingUrl = "https://api-mobot.herokuapp.com/" + `trainings/${req.params.trainingId}-training.mp3`;
+        let audioTrainingUrl = `https://mobot-audios.s3.us-west-2.amazonaws.com/${req.params.trainingId}-training.mp3`;
         let base64String = req.body.audioTrainingBase64
 
+        var trainingId = req.params.trainingId;
 
         var training = await repository.completeTrainingOfPatient(req.params.trainingId, req.body.audioTrainingBase64, audioTrainingUrl);
 
@@ -31,7 +35,26 @@ exports.put = async (req, res) => {
             console.log('File mp3 created');
         });
 
+
+        setTimeout(async function () {
+            var pathToSourceOutFile = path.resolve(__dirname, `../../../../trainings/${req.params.trainingId}-training.mp3`);
+
+            const fileContent = await fs.promises.readFile(pathToSourceOutFile);
+            const contentType = mime.getType(pathToSourceOutFile);
+            console.log(trainingId)
+            const s3 = new AWS.S3();
+            await s3.putObject({
+                Body: fileContent,
+                Key: trainingId + "-training.mp3",
+                Bucket: "mobot-audios",
+                ContentType: contentType,
+                ACL: 'public-read',
+            }).promise();
+        }, 12000);
+
+
         setTimeout(function () {
+            //removendo aac
             fs.unlink(`trainings/${req.params.trainingId}-training.aac`, function (err) {
                 if (err) {
                     console.log('error create exercise')
@@ -40,7 +63,17 @@ exports.put = async (req, res) => {
                 };
 
             });
-        }, 40000);
+
+            //removendo mp3
+            fs.unlink(`trainings/${req.params.trainingId}-training.mp3`, function (err) {
+                if (err) {
+                    console.log('error create exercise')
+                } else {
+                    console.log('File deleted!');
+                };
+
+            });
+        }, 50000);
 
         res.status(200).send({ training })
     } catch (err) {
