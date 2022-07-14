@@ -33,12 +33,18 @@ exports.push = async (req, res) => {
             });
         }
 
+        const resultsTokenSendNotification = tokensToSendNotification.filter(element => {
+            return element !== undefined;
+        });
+
+        console.log(resultsTokenSendNotification);
+
         const message = {
             notification: {
                 title: 'Mobot',
                 body: 'Lembre-se que tem exerícios te esperando no APP'
             },
-            tokens: tokensToSendNotification
+            tokens: resultsTokenSendNotification
         };
 
         firebase.messaging().sendMulticast(message)
