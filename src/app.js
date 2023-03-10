@@ -15,8 +15,6 @@ app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Methods", "*");
     next();
 });
-app.use('/exercises', express.static('exercises'));
-app.use('/trainings', express.static('trainings'));
 
 app.use('/api/', routes);
 

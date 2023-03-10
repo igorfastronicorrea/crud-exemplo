@@ -1,5 +1,5 @@
-const Fono = require('../../models/FonoModel');
-const repository = require('../../repositories/AuthFonoRepository');
+const User = require('../../models/UserModel');
+const repository = require('../../repositories/AuthUserRepository');
 const authService = require('../../services/authService');
 const bcryptjs = require('bcryptjs');
 

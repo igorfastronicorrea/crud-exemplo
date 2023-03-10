@@ -1,10 +1,10 @@
-const FonoModel = require('../models/FonoModel');
+const UserModel = require('../models/UserModel');
 
 exports.find = async (req) => {
 
     try {
 
-        var user = await FonoModel.findOne({ username: req.username }).select('+password');
+        var user = await UserModel.findOne({ username: req.username }).select('+password');
 
         return user;
     } catch (err) {
